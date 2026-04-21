@@ -9,6 +9,7 @@ Uses hash caching to skip regenerating unchanged atlases.
 
 import json
 import os
+import re
 import subprocess
 from pathlib import Path
 from datetime import datetime, timezone
@@ -33,44 +34,6 @@ ATLAS_COLS = 4              # columns in atlas grid
 ATLAS_ROWS = 2              # rows in atlas grid
 
 
-def get_github_pages_base():
-    """Derive the GitHub Pages base URL from env vars (CI) or git remote (local)."""
-    # GitHub Actions provides these automatically
-    repo_env  = os.environ.get("GITHUB_REPOSITORY")        # e.g. "Sairenix/tus.github.io"
-    owner_env = os.environ.get("GITHUB_REPOSITORY_OWNER")  # e.g. "Sairenix"
-
-    if repo_env and owner_env:
-        owner = owner_env.lower()
-        repo  = repo_env.split("/")[1]
-    else:
-        # Fall back to parsing the git remote when running locally
-        try:
-            remote = subprocess.check_output(
-                ["git", "remote", "get-url", "origin"],
-                cwd=REPO_ROOT, text=True
-            ).strip()
-            # Handles both HTTPS and SSH remotes:
-            #   https://github.com/Sairenix/tus.github.io.git
-            #   git@github.com:Sairenix/tus.github.io.git
-            if "github.com/" in remote:
-                path = remote.split("github.com/")[1]
-            elif "github.com:" in remote:
-                path = remote.split("github.com:")[1]
-            else:
-                raise ValueError(f"Unrecognised remote: {remote}")
-            owner, repo = path.rstrip(".git").split("/")
-            owner = owner.lower()
-        except Exception as e:
-            raise RuntimeError(f"Could not determine GitHub repo from git remote: {e}")
-
-    # User/org pages repos (owner.github.io) serve from the root, no repo segment
-    if repo.lower() == f"{owner}.github.io":
-        return f"https://{owner}.github.io"
-    else:
-        return f"https://{owner}.github.io/{repo}"
-
-
-GITHUB_URL_BASE = get_github_pages_base() + "/built_assets/images"
 
 NUM_SLOTS = 29                                                # Slots 0-28
 ATLAS_SLOTS = ATLAS_COLS * ATLAS_ROWS                         # 8 images per atlas
@@ -201,6 +164,71 @@ def compute_uv_offset(poster_id):
     return [uv_x, uv_y]
 
 
+def get_github_pages_base():
+    """Derive the GitHub Pages base URL from env vars (CI) or git remote (local)."""
+    repo_env  = os.environ.get("GITHUB_REPOSITORY")
+    owner_env = os.environ.get("GITHUB_REPOSITORY_OWNER")
+
+    if repo_env and owner_env:
+        owner = owner_env.lower()
+        repo  = repo_env.split("/")[1]
+    else:
+        try:
+            remote = subprocess.check_output(
+                ["git", "remote", "get-url", "origin"],
+                cwd=REPO_ROOT, text=True
+            ).strip()
+            if "github.com/" in remote:
+                path = remote.split("github.com/")[1]
+            elif "github.com:" in remote:
+                path = remote.split("github.com:")[1]
+            else:
+                raise ValueError(f"Unrecognised remote: {remote}")
+            owner, repo = path.rstrip(".git").split("/")
+            owner = owner.lower()
+        except Exception as e:
+            raise RuntimeError(f"Could not determine GitHub repo from git remote: {e}")
+
+    if repo.lower() == f"{owner}.github.io":
+        return f"https://{owner}.github.io"
+    else:
+        return f"https://{owner}.github.io/{repo}"
+
+
+def update_readme(pages_base, atlas_count):
+    """Write built asset links into README.md between marker comments."""
+    readme_path = REPO_ROOT / "README.md"
+
+    links_block = (
+        f"<!-- BUILT_LINKS_START -->\n"
+        f"### Built Asset Links\n\n"
+        f"| Asset | URL |\n"
+        f"|---|---|\n"
+        f"| Poster data JSON | `{pages_base}/built_assets/poster_data.json` |\n"
+        f"| Atlas images | `{pages_base}/built_assets/images/` |\n"
+        f"| Atlases built | {atlas_count} |\n"
+        f"<!-- BUILT_LINKS_END -->"
+    )
+
+    if readme_path.exists():
+        content = readme_path.read_text(encoding="utf-8")
+        # Replace existing block if present
+        content, replaced = re.subn(
+            r"<!-- BUILT_LINKS_START -->.*?<!-- BUILT_LINKS_END -->",
+            links_block,
+            content,
+            flags=re.DOTALL
+        )
+        if not replaced:
+            # Append if markers not found
+            content = content.rstrip() + "\n\n" + links_block + "\n"
+    else:
+        content = links_block + "\n"
+
+    readme_path.write_text(content, encoding="utf-8")
+    print("  Updated README.md with built asset links.")
+
+
 def main():
     """Main build process."""
     print("Building poster atlases...")
@@ -219,11 +247,8 @@ def main():
     rebuilt_atlases = []
 
     # Generate atlases
-    atlas_urls = []
     for atlas_index in range(NUM_ATLASES):
         atlas_path = BUILT_IMAGES / f"atlas_{atlas_index}.png"
-        atlas_url = f"{GITHUB_URL_BASE}/atlas_{atlas_index}.png"
-        atlas_urls.append(atlas_url)
 
         # Check if rebuild is needed
         if not atlas_needs_rebuild(atlas_index, hash_cache):
@@ -251,7 +276,7 @@ def main():
 
     output_data = {
         "buildTime": build_time,
-        "atlases": atlas_urls,
+        "atlasCount": NUM_ATLASES,
         "posters": {}
     }
 
@@ -274,6 +299,10 @@ def main():
 
     with open(BUILT_DATA, "w") as f:
         json.dump(output_data, f, indent=2)
+
+    # Update README with live links
+    pages_base = get_github_pages_base()
+    update_readme(pages_base, NUM_ATLASES)
 
     print(f"Build complete! Rebuilt {len(rebuilt_atlases)} atlases.")
     if rebuilt_atlases:
