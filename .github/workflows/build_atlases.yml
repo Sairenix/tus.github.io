@@ -1,0 +1,37 @@
+name: Build Poster Atlases
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'images/**'
+      - 'poster_data.json'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install Pillow
+
+      - name: Build atlases
+        run: python build_atlases.py
+
+      - name: Commit and push built assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add built_assets/
+          git diff --cached --exit-code || git commit -m "chore: rebuild poster atlases"
+          git push
