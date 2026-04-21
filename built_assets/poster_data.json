@@ -1,14 +1,10 @@
 {
-  "buildTime": "2026-04-21T00:12:12.499693+00:00",
+  "buildTime": "2026-04-21T00:23:08.071403+00:00",
   "atlases": [
     "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_0.png",
     "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_1.png",
     "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_2.png",
-    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_3.png",
-    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_4.png",
-    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_5.png",
-    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_6.png",
-    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_7.png"
+    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_3.png"
   ],
   "posters": {
     "0": {
@@ -20,7 +16,7 @@
         0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
@@ -29,11 +25,11 @@
       "isVisible": true,
       "atlasIndex": 0,
       "uvOffset": [
-        0.5,
+        0.25,
         0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
@@ -42,11 +38,11 @@
       "isVisible": true,
       "atlasIndex": 0,
       "uvOffset": [
-        0.0,
-        0.0
+        0.5,
+        0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
@@ -55,336 +51,336 @@
       "isVisible": true,
       "atlasIndex": 0,
       "uvOffset": [
-        0.5,
-        0.0
+        0.75,
+        0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "4": {
       "name": "Konges",
       "isVisible": true,
-      "atlasIndex": 1,
+      "atlasIndex": 0,
       "uvOffset": [
         0.0,
-        0.5
+        0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "5": {
       "name": "Bas",
       "isVisible": true,
-      "atlasIndex": 1,
+      "atlasIndex": 0,
       "uvOffset": [
-        0.5,
-        0.5
+        0.25,
+        0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "6": {
       "name": "Angel",
       "isVisible": true,
-      "atlasIndex": 1,
+      "atlasIndex": 0,
       "uvOffset": [
-        0.0,
+        0.5,
         0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "7": {
       "name": "Koffee",
       "isVisible": true,
-      "atlasIndex": 1,
+      "atlasIndex": 0,
       "uvOffset": [
-        0.5,
+        0.75,
         0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "8": {
       "name": "Sai",
       "isVisible": true,
-      "atlasIndex": 2,
+      "atlasIndex": 1,
       "uvOffset": [
         0.0,
         0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "9": {
       "name": "Catman",
       "isVisible": true,
-      "atlasIndex": 2,
+      "atlasIndex": 1,
       "uvOffset": [
-        0.5,
+        0.25,
         0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "10": {
       "name": "Bunnywbuns",
       "isVisible": true,
-      "atlasIndex": 2,
+      "atlasIndex": 1,
       "uvOffset": [
-        0.0,
-        0.0
+        0.5,
+        0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "11": {
       "name": "Deathzer",
       "isVisible": true,
-      "atlasIndex": 2,
+      "atlasIndex": 1,
       "uvOffset": [
-        0.5,
-        0.0
+        0.75,
+        0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "12": {
       "name": "Djibouti03",
       "isVisible": true,
-      "atlasIndex": 3,
+      "atlasIndex": 1,
       "uvOffset": [
         0.0,
-        0.5
+        0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "13": {
       "name": "Fontl",
       "isVisible": true,
-      "atlasIndex": 3,
+      "atlasIndex": 1,
       "uvOffset": [
-        0.5,
-        0.5
+        0.25,
+        0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "14": {
       "name": "Iphel",
       "isVisible": true,
-      "atlasIndex": 3,
+      "atlasIndex": 1,
       "uvOffset": [
-        0.0,
+        0.5,
         0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "15": {
       "name": "JuiceStain",
       "isVisible": true,
-      "atlasIndex": 3,
+      "atlasIndex": 1,
       "uvOffset": [
-        0.5,
+        0.75,
         0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "16": {
       "name": "Kookies",
       "isVisible": true,
-      "atlasIndex": 4,
+      "atlasIndex": 2,
       "uvOffset": [
         0.0,
         0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "17": {
       "name": "Kuroki",
       "isVisible": true,
-      "atlasIndex": 4,
+      "atlasIndex": 2,
       "uvOffset": [
-        0.5,
+        0.25,
         0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "18": {
       "name": "Lumii",
       "isVisible": true,
-      "atlasIndex": 4,
+      "atlasIndex": 2,
       "uvOffset": [
-        0.0,
-        0.0
+        0.5,
+        0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "19": {
       "name": "Necrochik",
       "isVisible": true,
-      "atlasIndex": 4,
+      "atlasIndex": 2,
       "uvOffset": [
-        0.5,
-        0.0
+        0.75,
+        0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "20": {
       "name": "",
       "isVisible": false,
-      "atlasIndex": 5,
+      "atlasIndex": 2,
       "uvOffset": [
         0.0,
-        0.5
+        0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "21": {
       "name": "RavingMidnight",
       "isVisible": true,
-      "atlasIndex": 5,
+      "atlasIndex": 2,
       "uvOffset": [
-        0.5,
-        0.5
+        0.25,
+        0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "22": {
       "name": "Toki",
       "isVisible": true,
-      "atlasIndex": 5,
+      "atlasIndex": 2,
       "uvOffset": [
-        0.0,
+        0.5,
         0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "23": {
       "name": "",
       "isVisible": false,
-      "atlasIndex": 5,
+      "atlasIndex": 2,
       "uvOffset": [
-        0.5,
+        0.75,
         0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "24": {
       "name": "",
       "isVisible": false,
-      "atlasIndex": 6,
+      "atlasIndex": 3,
       "uvOffset": [
         0.0,
         0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "25": {
       "name": "Troble",
       "isVisible": true,
-      "atlasIndex": 6,
+      "atlasIndex": 3,
       "uvOffset": [
-        0.5,
+        0.25,
         0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "26": {
       "name": "Qrrpt",
       "isVisible": true,
-      "atlasIndex": 6,
+      "atlasIndex": 3,
       "uvOffset": [
-        0.0,
-        0.0
+        0.5,
+        0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "27": {
       "name": "",
       "isVisible": false,
-      "atlasIndex": 6,
+      "atlasIndex": 3,
       "uvOffset": [
-        0.5,
-        0.0
+        0.75,
+        0.5
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     },
     "28": {
       "name": "",
       "isVisible": false,
-      "atlasIndex": 7,
+      "atlasIndex": 3,
       "uvOffset": [
         0.0,
-        0.5
+        0.0
       ],
       "uvScale": [
-        0.5,
+        0.25,
         0.5
       ]
     }
