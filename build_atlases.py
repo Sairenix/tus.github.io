@@ -26,9 +26,11 @@ HASH_CACHE_FILE = BUILT_ASSETS / ".hashes.json"
 
 # Image dimensions
 SOURCE_SIZE = (512, 1024)   # width, height of each source image
-ATLAS_SIZE = (1024, 2048)   # 2x2 grid of 512x1024 tiles
+ATLAS_SIZE = (2048, 2048)   # 4x2 grid of 512x1024 tiles
 TILE_W = 512                # tile width
 TILE_H = 1024               # tile height
+ATLAS_COLS = 4              # columns in atlas grid
+ATLAS_ROWS = 2              # rows in atlas grid
 
 
 def get_github_pages_base():
@@ -70,9 +72,9 @@ def get_github_pages_base():
 
 GITHUB_URL_BASE = get_github_pages_base() + "/built_assets/images"
 
-NUM_SLOTS = 29  # Slots 0-28
-ATLAS_SLOTS = 4  # 2x2 grid per atlas
-NUM_ATLASES = (NUM_SLOTS + ATLAS_SLOTS - 1) // ATLAS_SLOTS  # 8 atlases
+NUM_SLOTS = 29                                                # Slots 0-28
+ATLAS_SLOTS = ATLAS_COLS * ATLAS_ROWS                         # 8 images per atlas
+NUM_ATLASES = (NUM_SLOTS + ATLAS_SLOTS - 1) // ATLAS_SLOTS   # 4 atlases
 
 
 def compute_file_hash(file_path):
@@ -156,7 +158,7 @@ def load_image(slot_id):
 
 
 def create_atlas(atlas_index):
-    """Create a 2x2 atlas (1024x2048) from 4 source images."""
+    """Create a 4x2 atlas (2048x2048) from 8 source images."""
     start_slot = atlas_index * ATLAS_SLOTS
     slot_ids = list(range(start_slot, min(start_slot + ATLAS_SLOTS, NUM_SLOTS)))
 
@@ -168,24 +170,17 @@ def create_atlas(atlas_index):
     atlas = Image.new("RGBA", ATLAS_SIZE, (0, 0, 0, 255))
 
     # Layout (PIL y=0 at top):
-    # [0][1]  top half (y 0-1023)
-    # [2][3]  bottom half (y 1024-2047)
-
+    # [0][1][2][3]  top half    (y 0-1023)
+    # [4][5][6][7]  bottom half (y 1024-2047)
     positions = [
-        (0,     0),      # Slot 0: top-left
-        (TILE_W, 0),     # Slot 1: top-right
-        (0,     TILE_H), # Slot 2: bottom-left
-        (TILE_W, TILE_H),# Slot 3: bottom-right
+        (col * TILE_W, row * TILE_H)
+        for row in range(ATLAS_ROWS)
+        for col in range(ATLAS_COLS)
     ]
 
     for slot_index, slot_id in enumerate(slot_ids):
-        if slot_id == -1:
-            img = create_black_tile()
-        else:
-            img = load_image(slot_id)
-
-        pos = positions[slot_index]
-        atlas.paste(img, pos, img)
+        img = create_black_tile() if slot_id == -1 else load_image(slot_id)
+        atlas.paste(img, positions[slot_index], img)
 
     return atlas
 
@@ -193,16 +188,16 @@ def create_atlas(atlas_index):
 def compute_uv_offset(poster_id):
     """
     Compute UV offset for a poster within its atlas.
-    Slot layout in atlas: 0=TL, 1=TR, 2=BL, 3=BR
-    Unity UV: origin at bottom-left, y increases upward
-    PNG: origin at top-left, y increases downward
+    Slot layout (PIL, y=0 at top):
+      [0][1][2][3]  row 0 (top)
+      [4][5][6][7]  row 1 (bottom)
+    Unity UV has y=0 at bottom, so rows are flipped.
     """
     slot_in_atlas = poster_id % ATLAS_SLOTS
-    col = slot_in_atlas % 2
-    row = slot_in_atlas // 2
-    # Flip row for Unity UV (y=0 at bottom)
-    uv_y = (1 - row) * 0.5
-    uv_x = col * 0.5
+    col = slot_in_atlas % ATLAS_COLS
+    row = slot_in_atlas // ATLAS_COLS
+    uv_x = col / ATLAS_COLS           # 0.0, 0.25, 0.5, 0.75
+    uv_y = (1 - row) / ATLAS_ROWS     # row 0 → 0.5, row 1 → 0.0
     return [uv_x, uv_y]
 
 
@@ -274,7 +269,7 @@ def main():
             "isVisible": original.get("isVisible", False),
             "atlasIndex": atlas_index,
             "uvOffset": uv_offset,
-            "uvScale": [0.5, 0.5]
+            "uvScale": [1 / ATLAS_COLS, 1 / ATLAS_ROWS]
         }
 
     with open(BUILT_DATA, "w") as f:
