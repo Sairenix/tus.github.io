@@ -1,14 +1,14 @@
 {
-  "buildTime": "2026-04-21T00:07:56.774835+00:00",
+  "buildTime": "2026-04-21T00:12:12.499693+00:00",
   "atlases": [
-    "https://raw.githubusercontent.com/Vowgan/SaiPosterLoading/main/built_assets/images/atlas_0.png",
-    "https://raw.githubusercontent.com/Vowgan/SaiPosterLoading/main/built_assets/images/atlas_1.png",
-    "https://raw.githubusercontent.com/Vowgan/SaiPosterLoading/main/built_assets/images/atlas_2.png",
-    "https://raw.githubusercontent.com/Vowgan/SaiPosterLoading/main/built_assets/images/atlas_3.png",
-    "https://raw.githubusercontent.com/Vowgan/SaiPosterLoading/main/built_assets/images/atlas_4.png",
-    "https://raw.githubusercontent.com/Vowgan/SaiPosterLoading/main/built_assets/images/atlas_5.png",
-    "https://raw.githubusercontent.com/Vowgan/SaiPosterLoading/main/built_assets/images/atlas_6.png",
-    "https://raw.githubusercontent.com/Vowgan/SaiPosterLoading/main/built_assets/images/atlas_7.png"
+    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_0.png",
+    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_1.png",
+    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_2.png",
+    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_3.png",
+    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_4.png",
+    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_5.png",
+    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_6.png",
+    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_7.png"
   ],
   "posters": {
     "0": {
