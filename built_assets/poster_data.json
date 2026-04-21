@@ -1,11 +1,6 @@
 {
-  "buildTime": "2026-04-21T00:23:08.071403+00:00",
-  "atlases": [
-    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_0.png",
-    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_1.png",
-    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_2.png",
-    "https://sairenix.github.io/tus.github.io/built_assets/images/atlas_3.png"
-  ],
+  "buildTime": "2026-04-21T00:29:25.477593+00:00",
+  "atlasCount": 4,
   "posters": {
     "0": {
       "name": "Eio",
