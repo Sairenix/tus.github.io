@@ -270,6 +270,16 @@ def main():
     # Save updated hash cache
     save_hash_cache(hash_cache)
 
+    # Remove any stale atlas files that are no longer needed
+    for stale in BUILT_IMAGES.glob("atlas_*.png"):
+        try:
+            index = int(stale.stem.split("_")[1])
+            if index >= NUM_ATLASES:
+                stale.unlink()
+                print(f"  Removed stale {stale.name}")
+        except (ValueError, IndexError):
+            pass
+
     # Generate poster_data.json
     print("  Generating poster_data.json...")
     build_time = datetime.now(timezone.utc).isoformat()
@@ -303,6 +313,19 @@ def main():
     # Update README with live links
     pages_base = get_github_pages_base()
     update_readme(pages_base, NUM_ATLASES)
+
+    # Build a descriptive commit message
+    if rebuilt_atlases:
+        indices = ", ".join(str(i) for i in rebuilt_atlases)
+        commit_message = f"chore: rebuild atlas {indices} ({len(rebuilt_atlases)}/{NUM_ATLASES} rebuilt)"
+    else:
+        commit_message = "chore: update poster metadata (no atlases changed)"
+
+    # Write commit message to GitHub Actions output if running in CI
+    github_output = os.environ.get("GITHUB_OUTPUT")
+    if github_output:
+        with open(github_output, "a") as f:
+            f.write(f"commit_message={commit_message}\n")
 
     print(f"Build complete! Rebuilt {len(rebuilt_atlases)} atlases.")
     if rebuilt_atlases:
