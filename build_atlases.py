@@ -9,6 +9,7 @@ Uses hash caching to skip regenerating unchanged atlases.
 
 import json
 import os
+import subprocess
 from pathlib import Path
 from datetime import datetime, timezone
 from PIL import Image
@@ -29,8 +30,45 @@ ATLAS_SIZE = (1024, 2048)   # 2x2 grid of 512x1024 tiles
 TILE_W = 512                # tile width
 TILE_H = 1024               # tile height
 
-# GitHub raw content URL for built assets
-GITHUB_URL_BASE = "https://raw.githubusercontent.com/Vowgan/SaiPosterLoading/main/built_assets/images"
+
+def get_github_pages_base():
+    """Derive the GitHub Pages base URL from env vars (CI) or git remote (local)."""
+    # GitHub Actions provides these automatically
+    repo_env  = os.environ.get("GITHUB_REPOSITORY")        # e.g. "Sairenix/tus.github.io"
+    owner_env = os.environ.get("GITHUB_REPOSITORY_OWNER")  # e.g. "Sairenix"
+
+    if repo_env and owner_env:
+        owner = owner_env.lower()
+        repo  = repo_env.split("/")[1]
+    else:
+        # Fall back to parsing the git remote when running locally
+        try:
+            remote = subprocess.check_output(
+                ["git", "remote", "get-url", "origin"],
+                cwd=REPO_ROOT, text=True
+            ).strip()
+            # Handles both HTTPS and SSH remotes:
+            #   https://github.com/Sairenix/tus.github.io.git
+            #   git@github.com:Sairenix/tus.github.io.git
+            if "github.com/" in remote:
+                path = remote.split("github.com/")[1]
+            elif "github.com:" in remote:
+                path = remote.split("github.com:")[1]
+            else:
+                raise ValueError(f"Unrecognised remote: {remote}")
+            owner, repo = path.rstrip(".git").split("/")
+            owner = owner.lower()
+        except Exception as e:
+            raise RuntimeError(f"Could not determine GitHub repo from git remote: {e}")
+
+    # User/org pages repos (owner.github.io) serve from the root, no repo segment
+    if repo.lower() == f"{owner}.github.io":
+        return f"https://{owner}.github.io"
+    else:
+        return f"https://{owner}.github.io/{repo}"
+
+
+GITHUB_URL_BASE = get_github_pages_base() + "/built_assets/images"
 
 NUM_SLOTS = 29  # Slots 0-28
 ATLAS_SLOTS = 4  # 2x2 grid per atlas
