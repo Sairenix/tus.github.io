@@ -1,5 +1,5 @@
 {
-  "buildTime": "2026-04-21T00:29:25.477593+00:00",
+  "buildTime": "2026-05-02T06:05:08.449274+00:00",
   "atlasCount": 4,
   "posters": {
     "0": {
@@ -107,8 +107,8 @@
       ]
     },
     "8": {
-      "name": "Sai",
-      "isVisible": true,
+      "name": "",
+      "isVisible": false,
       "atlasIndex": 1,
       "uvOffset": [
         0.0,
