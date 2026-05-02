@@ -7,7 +7,7 @@
 	"5": { "name": "Bas", "isVisible": true },
 	"6": { "name": "Angel", "isVisible": true },
 	"7": { "name": "Koffee", "isVisible": true },
-	"8": { "name": "Sai", "isVisible": true },
+	"8": { "name": "", "isVisible": false },
 	"9": { "name": "Catman", "isVisible": true },
 	"10": { "name": "Bunnywbuns", "isVisible": true },
 	"11": { "name": "Deathzer", "isVisible": true },
